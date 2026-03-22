@@ -6516,6 +6516,65 @@ function Library:CreateWindow(WindowInfo)
             Parent = Tabs,
         })
 
+        --// Profile Section \\--
+        local ProfileSection = New("Frame", {
+            BackgroundColor3 = "MainColor",
+            BorderSizePixel = 1,
+            BorderColor3 = "OutlineColor",
+            AnchorPoint = Vector2.new(0, 1),
+            Position = UDim2.new(0, 0, 1, -60),
+            Size = UDim2.new(0, InitialLeftWidth, 0, 60),
+            Parent = MainFrame,
+        })
+        
+        New("UICorner", {
+            CornerRadius = UDim.new(0, Library.CornerRadius),
+            Parent = ProfileSection,
+        })
+        
+        New("UIPadding", {
+            PaddingLeft = UDim.new(0, 8),
+            PaddingRight = UDim.new(0, 8),
+            PaddingTop = UDim.new(0, 6),
+            PaddingBottom = UDim.new(0, 6),
+            Parent = ProfileSection,
+        })
+        
+        -- Profile Avatar (placeholder circle)
+        local ProfileAvatar = New("Frame", {
+            BackgroundColor3 = "AccentColor",
+            Size = UDim2.fromOffset(40, 40),
+            Parent = ProfileSection,
+        })
+        
+        New("UICorner", {
+            CornerRadius = UDim.new(1, 0),
+            Parent = ProfileAvatar,
+        })
+        
+        New("TextLabel", {
+            BackgroundTransparency = 1,
+            Size = UDim2.fromScale(1, 1),
+            Text = "P",
+            TextColor3 = "FontColor",
+            TextSize = 20,
+            Parent = ProfileAvatar,
+        })
+        
+        -- Profile Name
+        New("TextLabel", {
+            BackgroundTransparency = 1,
+            AnchorPoint = Vector2.new(0, 0.5),
+            Position = UDim2.new(0, 50, 0.5, 0),
+            Size = UDim2.new(1, -58, 1, 0),
+            Text = "Priz's Hub",
+            TextColor3 = "FontColor",
+            TextSize = 14,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = Enum.TextYAlignment.Center,
+            Parent = ProfileSection,
+        })
+
         --// Container \\--
         Container = New("Frame", {
             AnchorPoint = Vector2.new(1, 0),
@@ -6523,8 +6582,8 @@ function Library:CreateWindow(WindowInfo)
                 return Library:GetBetterColor(Library.Scheme.BackgroundColor, 1)
             end,
             Name = "Container",
-            Position = UDim2.new(1, 0, 0, 49),
-            Size = UDim2.new(1, -InitialLeftWidth - 1, 1, -70),
+            Position = UDim2.new(1, 0, 0, 89),
+            Size = UDim2.new(1, -InitialLeftWidth - 1, 1, -159),
             Parent = MainFrame,
         })
         New("UIPadding", {
@@ -6534,6 +6593,73 @@ function Library:CreateWindow(WindowInfo)
             PaddingTop = UDim.new(0, 0),
             Parent = Container,
         })
+
+        --// Nested Tabs Bar \\--
+        local NestedTabsBar = New("Frame", {
+            BackgroundColor3 = "BackgroundColor",
+            BorderColor3 = "OutlineColor",
+            BorderSizePixel = 1,
+            Position = UDim2.new(1, 0, 0, 49),
+            Size = UDim2.new(1, -InitialLeftWidth - 1, 0, 40),
+            Parent = MainFrame,
+        })
+        
+        New("UIListLayout", {
+            FillDirection = Enum.FillDirection.Horizontal,
+            HorizontalAlignment = Enum.HorizontalAlignment.Left,
+            Padding = UDim.new(0, 0),
+            Parent = NestedTabsBar,
+        })
+        
+        local NestedTabsContainer = New("ScrollingFrame", {
+            AutomaticCanvasSize = Enum.AutomaticSize.X,
+            BackgroundTransparency = 1,
+            CanvasSize = UDim2.fromScale(0, 0),
+            ScrollBarThickness = 0,
+            ScrollingDirection = Enum.ScrollingDirection.X,
+            Size = UDim2.fromScale(1, 1),
+            Parent = NestedTabsBar,
+        })
+        
+        -- Add example nested tabs (General, AutoFarm, Utilities)
+        local NestedTabNames = { "General", "AutoFarm", "Utilities" }
+        for _, TabName in ipairs(NestedTabNames) do
+            local NestedTab = New("TextButton", {
+                BackgroundColor3 = "BackgroundColor",
+                BorderColor3 = "OutlineColor",
+                BorderSizePixel = 1,
+                Size = UDim2.new(0, 100, 1, -2),
+                Text = TabName,
+                TextColor3 = "FontColor",
+                TextSize = 13,
+                Parent = NestedTabsContainer,
+            })
+            
+            New("UICorner", {
+                CornerRadius = UDim.new(0, Library.CornerRadius),
+                Parent = NestedTab,
+            })
+            
+            local function SelectNestedTab()
+                TweenService:Create(NestedTab, Library.TweenInfo, {
+                    BackgroundColor3 = Library.Scheme.AccentColor,
+                }):Play()
+            end
+            
+            local function DeselectNestedTab()
+                TweenService:Create(NestedTab, Library.TweenInfo, {
+                    BackgroundColor3 = Library.Scheme.BackgroundColor,
+                }):Play()
+            end
+            
+            NestedTab.MouseButton1Click:Connect(SelectNestedTab)
+            NestedTab.MouseEnter:Connect(function()
+                TweenService:Create(NestedTab, Library.TweenInfo, {
+                    BackgroundColor3 = Library:GetDarkerColor(Library.Scheme.BackgroundColor),
+                }):Play()
+            end)
+            NestedTab.MouseLeave:Connect(DeselectNestedTab)
+        end
     end
 
     --// Window Table \\--
@@ -7438,6 +7564,7 @@ function Library:CreateWindow(WindowInfo)
             if TabIcon then
                 TweenService:Create(TabIcon, Library.TweenInfo, {
                     ImageTransparency = Hovering and 0.25 or 0.5,
+                    ImageColor3 = Hovering and Library.Scheme.AccentColor or Color3.fromRGB(128, 128, 128),
                 }):Play()
             end
         end
@@ -7456,6 +7583,7 @@ function Library:CreateWindow(WindowInfo)
             if TabIcon then
                 TweenService:Create(TabIcon, Library.TweenInfo, {
                     ImageTransparency = 0,
+                    ImageColor3 = Library.Scheme.AccentColor,
                 }):Play()
             end
 
@@ -7463,7 +7591,13 @@ function Library:CreateWindow(WindowInfo)
                 Window:ShowTabInfo(Name, Description)
             end
 
+            -- Slide animation: fade in from right
             TabContainer.Visible = true
+            TabContainer.BackgroundTransparency = 1
+            TweenService:Create(TabContainer, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                BackgroundTransparency = 0,
+            }):Play()
+            
             Tab:RefreshSides()
 
             Library.ActiveTab = Tab
@@ -7483,9 +7617,18 @@ function Library:CreateWindow(WindowInfo)
             if TabIcon then
                 TweenService:Create(TabIcon, Library.TweenInfo, {
                     ImageTransparency = 0.5,
+                    ImageColor3 = Color3.fromRGB(128, 128, 128),
                 }):Play()
             end
-            TabContainer.Visible = false
+            
+            -- Slide animation: fade out
+            local FadeTween = TweenService:Create(TabContainer, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+                BackgroundTransparency = 1,
+            })
+            FadeTween:Play()
+            FadeTween.Completed:Connect(function()
+                TabContainer.Visible = false
+            end)
 
             Window:HideTabInfo()
 
