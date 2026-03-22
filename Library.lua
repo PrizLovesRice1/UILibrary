@@ -6524,9 +6524,9 @@ function Library:CreateWindow(WindowInfo)
         --// Profile Section \\--
         print("[UI] Creating profile section")
         local ProfileSection = New("Frame", {
-            BackgroundColor3 = "MainColor",
+            BackgroundColor3 = Library.Scheme.MainColor,
             BorderSizePixel = 1,
-            BorderColor3 = "OutlineColor",
+            BorderColor3 = Library.Scheme.OutlineColor,
             AnchorPoint = Vector2.new(0, 1),
             Position = UDim2.new(0, 0, 1, -60),
             Size = UDim2.new(0, InitialLeftWidth, 0, 60),
@@ -6548,7 +6548,7 @@ function Library:CreateWindow(WindowInfo)
         
         -- Profile Avatar (placeholder circle)
         local ProfileAvatar = New("Frame", {
-            BackgroundColor3 = "AccentColor",
+            BackgroundColor3 = Library.Scheme.AccentColor,
             Size = UDim2.fromOffset(40, 40),
             Parent = ProfileSection,
         })
@@ -6562,7 +6562,7 @@ function Library:CreateWindow(WindowInfo)
             BackgroundTransparency = 1,
             Size = UDim2.fromScale(1, 1),
             Text = "P",
-            TextColor3 = "FontColor",
+            TextColor3 = Library.Scheme.FontColor,
             TextSize = 20,
             Parent = ProfileAvatar,
         })
@@ -6574,7 +6574,7 @@ function Library:CreateWindow(WindowInfo)
             Position = UDim2.new(0, 50, 0.5, 0),
             Size = UDim2.new(1, -58, 1, 0),
             Text = "Priz's Hub",
-            TextColor3 = "FontColor",
+            TextColor3 = Library.Scheme.FontColor,
             TextSize = 14,
             TextXAlignment = Enum.TextXAlignment.Left,
             TextYAlignment = Enum.TextYAlignment.Center,
@@ -6603,8 +6603,8 @@ function Library:CreateWindow(WindowInfo)
         --// Nested Tabs Bar \\--
         print("[UI] Creating nested tabs bar")
         local NestedTabsBar = New("Frame", {
-            BackgroundColor3 = "BackgroundColor",
-            BorderColor3 = "OutlineColor",
+            BackgroundColor3 = Library.Scheme.BackgroundColor,
+            BorderColor3 = Library.Scheme.OutlineColor,
             BorderSizePixel = 1,
             Position = UDim2.new(1, 0, 0, 49),
             Size = UDim2.new(1, -InitialLeftWidth - 1, 0, 40),
@@ -6632,12 +6632,12 @@ function Library:CreateWindow(WindowInfo)
         local NestedTabNames = { "General", "AutoFarm", "Utilities" }
         for _, TabName in ipairs(NestedTabNames) do
             local NestedTab = New("TextButton", {
-                BackgroundColor3 = "BackgroundColor",
-                BorderColor3 = "OutlineColor",
+                BackgroundColor3 = Library.Scheme.BackgroundColor,
+                BorderColor3 = Library.Scheme.OutlineColor,
                 BorderSizePixel = 1,
                 Size = UDim2.new(0, 100, 1, -2),
                 Text = TabName,
-                TextColor3 = "FontColor",
+                TextColor3 = Library.Scheme.FontColor,
                 TextSize = 13,
                 Parent = NestedTabsContainer,
             })
