@@ -6551,8 +6551,10 @@ function Library:CreateWindow(WindowInfo)
         local LocalPlayer = Players.LocalPlayer
         local PlayerAvatar = "https://www.roblox.com/bust-thumbnails/avatar/" .. LocalPlayer.UserId .. "/110x110.png"
         
+        print("[UI] Loading player avatar from URL: " .. PlayerAvatar)
         local ProfileAvatar = New("ImageLabel", {
             BackgroundColor3 = Library.Scheme.AccentColor,
+            BackgroundTransparency = 0,
             Image = PlayerAvatar,
             ScaleType = Enum.ScaleType.Crop,
             Size = UDim2.fromOffset(40, 40),
@@ -6580,12 +6582,12 @@ function Library:CreateWindow(WindowInfo)
 
         --// Container \\--
         Container = New("Frame", {
-            AnchorPoint = Vector2.new(1, 0),
+            AnchorPoint = Vector2.new(0, 0),
             BackgroundColor3 = function()
                 return Library:GetBetterColor(Library.Scheme.BackgroundColor, 1)
             end,
             Name = "Container",
-            Position = UDim2.new(1, 0, 0, 129),
+            Position = UDim2.new(0, InitialLeftWidth + 1, 0, 129),
             Size = UDim2.new(1, -InitialLeftWidth - 1, 1, -199),
             Parent = MainFrame,
         })
@@ -6603,8 +6605,8 @@ function Library:CreateWindow(WindowInfo)
             BackgroundColor3 = Library.Scheme.BackgroundColor,
             BorderColor3 = Library.Scheme.OutlineColor,
             BorderSizePixel = 1,
-            Position = UDim2.new(1, 0, 0, 89),
-            Size = UDim2.new(1, -InitialLeftWidth - 1, 0, 40),
+            Position = UDim2.new(0, 0, 0, 89),
+            Size = UDim2.new(1, 0, 0, 40),
             Parent = MainFrame,
         })
         
