@@ -6546,9 +6546,15 @@ function Library:CreateWindow(WindowInfo)
             Parent = ProfileSection,
         })
         
-        -- Profile Avatar (placeholder circle)
-        local ProfileAvatar = New("Frame", {
+        -- Profile Avatar (Roblox avatar image)
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+        local PlayerAvatar = "https://www.roblox.com/bust-thumbnails/avatar/" .. LocalPlayer.UserId .. "/110x110.png"
+        
+        local ProfileAvatar = New("ImageLabel", {
             BackgroundColor3 = Library.Scheme.AccentColor,
+            Image = PlayerAvatar,
+            ScaleType = Enum.ScaleType.Crop,
             Size = UDim2.fromOffset(40, 40),
             Parent = ProfileSection,
         })
@@ -6558,22 +6564,13 @@ function Library:CreateWindow(WindowInfo)
             Parent = ProfileAvatar,
         })
         
-        New("TextLabel", {
-            BackgroundTransparency = 1,
-            Size = UDim2.fromScale(1, 1),
-            Text = "P",
-            TextColor3 = Library.Scheme.FontColor,
-            TextSize = 20,
-            Parent = ProfileAvatar,
-        })
-        
-        -- Profile Name
+        -- Profile Name (Roblox username)
         New("TextLabel", {
             BackgroundTransparency = 1,
             AnchorPoint = Vector2.new(0, 0.5),
             Position = UDim2.new(0, 50, 0.5, 0),
             Size = UDim2.new(1, -58, 1, 0),
-            Text = "Priz's Hub",
+            Text = LocalPlayer.Name,
             TextColor3 = Library.Scheme.FontColor,
             TextSize = 14,
             TextXAlignment = Enum.TextXAlignment.Left,
@@ -6588,8 +6585,8 @@ function Library:CreateWindow(WindowInfo)
                 return Library:GetBetterColor(Library.Scheme.BackgroundColor, 1)
             end,
             Name = "Container",
-            Position = UDim2.new(1, 0, 0, 89),
-            Size = UDim2.new(1, -InitialLeftWidth - 1, 1, -159),
+            Position = UDim2.new(1, 0, 0, 129),
+            Size = UDim2.new(1, -InitialLeftWidth - 1, 1, -199),
             Parent = MainFrame,
         })
         New("UIPadding", {
@@ -6606,7 +6603,7 @@ function Library:CreateWindow(WindowInfo)
             BackgroundColor3 = Library.Scheme.BackgroundColor,
             BorderColor3 = Library.Scheme.OutlineColor,
             BorderSizePixel = 1,
-            Position = UDim2.new(1, 0, 0, 49),
+            Position = UDim2.new(1, 0, 0, 89),
             Size = UDim2.new(1, -InitialLeftWidth - 1, 0, 40),
             Parent = MainFrame,
         })
