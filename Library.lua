@@ -6150,6 +6150,7 @@ function Library:CreateWindow(WindowInfo)
         })
         
         -- Add falling snow effect across entire UI
+        print("[UI] Creating snow effect")
         local SnowContainer = New("Frame", {
             BackgroundTransparency = 1,
             Size = UDim2.fromScale(1, 1),
@@ -6521,6 +6522,7 @@ function Library:CreateWindow(WindowInfo)
         })
 
         --// Profile Section \\--
+        print("[UI] Creating profile section")
         local ProfileSection = New("Frame", {
             BackgroundColor3 = "MainColor",
             BorderSizePixel = 1,
@@ -6599,6 +6601,7 @@ function Library:CreateWindow(WindowInfo)
         })
 
         --// Nested Tabs Bar \\--
+        print("[UI] Creating nested tabs bar")
         local NestedTabsBar = New("Frame", {
             BackgroundColor3 = "BackgroundColor",
             BorderColor3 = "OutlineColor",
