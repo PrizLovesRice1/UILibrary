@@ -6149,12 +6149,14 @@ function Library:CreateWindow(WindowInfo)
             Parent = ScreenGui,
         })
         
-        -- Add falling snow effect
+        -- Add falling snow effect across entire UI
         local SnowContainer = New("Frame", {
             BackgroundTransparency = 1,
             Size = UDim2.fromScale(1, 1),
+            Position = UDim2.fromScale(0, 0),
             ClipsDescendants = true,
             Parent = MainFrame,
+            ZIndex = 1,
         })
         
         local function CreateSnowParticle()
@@ -6163,8 +6165,8 @@ function Library:CreateWindow(WindowInfo)
                 BackgroundColor3 = Color3.new(1, 1, 1),
                 TextTransparency = 1,
                 BorderSizePixel = 0,
-                Size = UDim2.fromOffset(2, 2),
-                Position = UDim2.fromOffset(StartX, -5),
+                Size = UDim2.fromOffset(3, 3),
+                Position = UDim2.fromOffset(StartX, -10),
                 Parent = SnowContainer,
             })
             
@@ -6173,9 +6175,9 @@ function Library:CreateWindow(WindowInfo)
                 Parent = SnowParticle,
             }))
             
-            local Duration = math.random(3, 8)
+            local Duration = math.random(4, 10)
             local Tween = TweenService:Create(SnowParticle, TweenInfo.new(Duration, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
-                Position = UDim2.fromOffset(StartX + math.random(-30, 30), MainFrame.AbsoluteSize.Y + 5),
+                Position = UDim2.fromOffset(StartX + math.random(-50, 50), MainFrame.AbsoluteSize.Y + 10),
                 BackgroundTransparency = 1,
             })
             Tween:Play()
@@ -6191,12 +6193,14 @@ function Library:CreateWindow(WindowInfo)
             end)
         end
         
-        -- Spawn snow particles continuously
+        -- Spawn snow particles continuously across entire UI
         Library:GiveSignal(task.spawn(function()
             while not Library.Unloaded and MainFrame and MainFrame.Parent do
-                task.wait(0.3)
+                task.wait(0.2)
                 if Library.Toggled then
-                    CreateSnowParticle()
+                    for _ = 1, 2 do
+                        CreateSnowParticle()
+                    end
                 end
             end
         end))
