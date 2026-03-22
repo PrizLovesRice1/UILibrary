@@ -89,7 +89,6 @@ LeftGroupBox:AddToggle("MyToggle", {
 	Risky = false, -- Makes the text red (the color can be changed using Library.Scheme.Red) (Default value = false)
 
 	Callback = function(Value)
-		print("[cb] MyToggle changed to:", Value)
 	end,
 })
 	:AddColorPicker("ColorPicker1", {
@@ -98,7 +97,6 @@ LeftGroupBox:AddToggle("MyToggle", {
 		Transparency = 0, -- Optional. Enables transparency changing for this color picker (leave as nil to disable)
 
 		Callback = function(Value)
-			print("[cb] Color changed!", Value)
 		end,
 	})
 	:AddColorPicker("ColorPicker2", {
@@ -120,7 +118,6 @@ LeftGroupBox:AddToggle("MyToggle", {
 -- Calls the passed function when the toggle is updated
 Toggles.MyToggle:OnChanged(function()
 	-- here we get our toggle object & then get its value
-	print("MyToggle changed to:", Toggles.MyToggle.Value)
 end)
 
 -- This should print to the console: "My toggle state changed! New value: false"
@@ -137,12 +134,10 @@ LeftGroupBox:AddCheckbox("MyCheckbox", {
 	Risky = false, -- Makes the text red (the color can be changed using Library.Scheme.Red) (Default value = false)
 
 	Callback = function(Value)
-		print("[cb] MyCheckbox changed to:", Value)
 	end,
 })
 
 Toggles.MyCheckbox:OnChanged(function()
-	print("MyCheckbox changed to:", Toggles.MyCheckbox.Value)
 end)
 
 -- 1/15/23
@@ -164,7 +159,6 @@ end)
 local MyButton = LeftGroupBox:AddButton({
 	Text = "Button",
 	Func = function()
-		print("You clicked a button!")
 	end,
 	DoubleClick = false,
 
@@ -179,7 +173,6 @@ local MyButton = LeftGroupBox:AddButton({
 local MyButton2 = MyButton:AddButton({
 	Text = "Sub button",
 	Func = function()
-		print("You clicked a sub button!")
 	end,
 	DoubleClick = true, -- You will have to click this button twice to trigger the callback
 	Tooltip = "This is the sub button",
@@ -189,7 +182,6 @@ local MyButton2 = MyButton:AddButton({
 local MyDisabledButton = LeftGroupBox:AddButton({
 	Text = "Disabled Button",
 	Func = function()
-		print("You somehow clicked a disabled button!")
 	end,
 	DoubleClick = false,
 	Tooltip = "This is a disabled button",
@@ -265,7 +257,6 @@ LeftGroupBox:AddSlider("MySlider", {
 	Compact = false,
 
 	Callback = function(Value)
-		print("[cb] MySlider was changed! New value:", Value)
 	end,
 
 	Tooltip = "I am a slider!", -- Information shown when you hover over the slider
@@ -281,7 +272,6 @@ LeftGroupBox:AddSlider("MySlider", {
 
 local Number = Options.MySlider.Value
 Options.MySlider:OnChanged(function()
-	print("MySlider was changed! New value:", Options.MySlider.Value)
 end)
 
 -- This should print to the console: "MySlider was changed! New value: 3"
