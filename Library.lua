@@ -6148,6 +6148,58 @@ function Library:CreateWindow(WindowInfo)
             Visible = false,
             Parent = ScreenGui,
         })
+        
+        -- Add falling snow effect
+        local SnowContainer = New("Frame", {
+            BackgroundTransparency = 1,
+            Size = UDim2.fromScale(1, 1),
+            ClipsDescendants = true,
+            Parent = MainFrame,
+        })
+        
+        local function CreateSnowParticle()
+            local StartX = math.random(0, MainFrame.AbsoluteSize.X)
+            local SnowParticle = New("TextLabel", {
+                BackgroundColor3 = Color3.new(1, 1, 1),
+                TextTransparency = 1,
+                BorderSizePixel = 0,
+                Size = UDim2.fromOffset(2, 2),
+                Position = UDim2.fromOffset(StartX, -5),
+                Parent = SnowContainer,
+            })
+            
+            table.insert(Library.Corners, New("UICorner", {
+                CornerRadius = UDim.new(1, 0),
+                Parent = SnowParticle,
+            }))
+            
+            local Duration = math.random(3, 8)
+            local Tween = TweenService:Create(SnowParticle, TweenInfo.new(Duration, Enum.EasingStyle.Linear, Enum.EasingDirection.In), {
+                Position = UDim2.fromOffset(StartX + math.random(-30, 30), MainFrame.AbsoluteSize.Y + 5),
+                BackgroundTransparency = 1,
+            })
+            Tween:Play()
+            
+            -- Fade in at start
+            SnowParticle.BackgroundTransparency = 1
+            TweenService:Create(SnowParticle, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                BackgroundTransparency = 0.3,
+            }):Play()
+            
+            Tween.Completed:Connect(function()
+                SnowParticle:Destroy()
+            end)
+        end
+        
+        -- Spawn snow particles continuously
+        Library:GiveSignal(task.spawn(function()
+            while not Library.Unloaded and MainFrame and MainFrame.Parent do
+                task.wait(0.3)
+                if Library.Toggled then
+                    CreateSnowParticle()
+                end
+            end
+        end))
         table.insert(
             Library.Corners,
             New("UICorner", {
