@@ -6155,7 +6155,7 @@ function Library:CreateWindow(WindowInfo)
             BackgroundTransparency = 1,
             Size = UDim2.fromScale(1, 1),
             Position = UDim2.fromScale(0, 0),
-            ClipsDescendants = true,
+            ClipsDescendants = false,
             Parent = MainFrame,
             ZIndex = 1,
         })
@@ -6512,24 +6512,29 @@ function Library:CreateWindow(WindowInfo)
             AutomaticCanvasSize = Enum.AutomaticSize.Y,
             BackgroundColor3 = "BackgroundColor",
             CanvasSize = UDim2.fromScale(0, 0),
-            Position = UDim2.fromOffset(0, 49),
+            Position = UDim2.fromOffset(0, 129),
             ScrollBarThickness = 0,
-            Size = UDim2.new(0, InitialLeftWidth, 1, -70),
+            Size = UDim2.new(0, InitialLeftWidth, 1, -189),
             Parent = MainFrame,
         })
         New("UIListLayout", {
             Parent = Tabs,
         })
 
-        --// Profile Section \\--
+        --// Profile Section (Bottom Right) \\--
         print("[UI] Creating profile section")
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+        local RunService = game:GetService("RunService")
+        local PlayerAvatar = "https://www.roblox.com/bust-thumbnails/avatar/" .. LocalPlayer.UserId .. "/110x110.png"
+        
         local ProfileSection = New("Frame", {
             BackgroundColor3 = Library.Scheme.MainColor,
             BorderSizePixel = 1,
             BorderColor3 = Library.Scheme.OutlineColor,
-            AnchorPoint = Vector2.new(0, 1),
-            Position = UDim2.new(0, 0, 1, -60),
-            Size = UDim2.new(0, InitialLeftWidth, 0, 60),
+            AnchorPoint = Vector2.new(1, 1),
+            Position = UDim2.new(1, 0, 1, -20),
+            Size = UDim2.new(0, 220, 0, 60),
             Parent = MainFrame,
         })
         
@@ -6547,11 +6552,6 @@ function Library:CreateWindow(WindowInfo)
         })
         
         -- Profile Avatar (Roblox avatar image)
-        local Players = game:GetService("Players")
-        local LocalPlayer = Players.LocalPlayer
-        local PlayerAvatar = "https://www.roblox.com/bust-thumbnails/avatar/" .. LocalPlayer.UserId .. "/110x110.png"
-        
-        print("[UI] Loading player avatar from URL: " .. PlayerAvatar)
         local ProfileAvatar = New("ImageLabel", {
             BackgroundColor3 = Library.Scheme.AccentColor,
             BackgroundTransparency = 0,
@@ -6566,18 +6566,44 @@ function Library:CreateWindow(WindowInfo)
             Parent = ProfileAvatar,
         })
         
-        -- Profile Name (Roblox username)
+        -- Profile Name and Game Info
+        local ProfileInfo = New("Frame", {
+            BackgroundTransparency = 1,
+            AnchorPoint = Vector2.new(0, 0),
+            Position = UDim2.new(0, 50, 0, 0),
+            Size = UDim2.new(1, -58, 1, 0),
+            Parent = ProfileSection,
+        })
+        
+        New("UIListLayout", {
+            FillDirection = Enum.FillDirection.Vertical,
+            VerticalAlignment = Enum.VerticalAlignment.Center,
+            Parent = ProfileInfo,
+        })
+        
         New("TextLabel", {
             BackgroundTransparency = 1,
-            AnchorPoint = Vector2.new(0, 0.5),
-            Position = UDim2.new(0, 50, 0.5, 0),
-            Size = UDim2.new(1, -58, 1, 0),
+            Size = UDim2.fromScale(1, 0),
+            AutomaticSize = Enum.AutomaticSize.Y,
             Text = LocalPlayer.Name,
             TextColor3 = Library.Scheme.FontColor,
-            TextSize = 14,
+            TextSize = 12,
             TextXAlignment = Enum.TextXAlignment.Left,
-            TextYAlignment = Enum.TextYAlignment.Center,
-            Parent = ProfileSection,
+            TextYAlignment = Enum.TextYAlignment.Top,
+            Parent = ProfileInfo,
+        })
+        
+        local GameLabel = New("TextLabel", {
+            BackgroundTransparency = 1,
+            Size = UDim2.fromScale(1, 0),
+            AutomaticSize = Enum.AutomaticSize.Y,
+            Text = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name,
+            TextColor3 = Library.Scheme.FontColor,
+            TextSize = 10,
+            TextTransparency = 0.4,
+            TextXAlignment = Enum.TextXAlignment.Left,
+            TextYAlignment = Enum.TextYAlignment.Top,
+            Parent = ProfileInfo,
         })
 
         --// Container \\--
@@ -6602,11 +6628,10 @@ function Library:CreateWindow(WindowInfo)
         --// Nested Tabs Bar \\--
         print("[UI] Creating nested tabs bar")
         local NestedTabsBar = New("Frame", {
-            BackgroundColor3 = Library.Scheme.BackgroundColor,
-            BorderColor3 = Library.Scheme.OutlineColor,
-            BorderSizePixel = 1,
+            BackgroundTransparency = 1,
+            BorderSizePixel = 0,
             Position = UDim2.new(0, 0, 0, 89),
-            Size = UDim2.new(1, 0, 0, 40),
+            Size = UDim2.new(0, InitialLeftWidth, 0, 40),
             Parent = MainFrame,
         })
         
